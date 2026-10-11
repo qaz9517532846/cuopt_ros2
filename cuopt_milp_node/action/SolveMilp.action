@@ -1,0 +1,22 @@
+# Goal — CSR 格式的約束矩陣 + 目標係數 + 上下界 (對應 cuOptCreateRangedProblem 的參數)
+int32 num_variables
+int32 num_constraints
+float64[] objective_coefficients
+int32[] row_offsets
+int32[] col_indices
+float64[] matrix_values
+float64[] constraint_lower_bounds
+float64[] constraint_upper_bounds
+float64[] var_lower_bounds
+float64[] var_upper_bounds
+bool[] is_integer
+float64 time_limit
+---
+# Result
+bool success
+float64 objective_value
+float64[] solution
+string error_message
+---
+# Feedback
+string status
