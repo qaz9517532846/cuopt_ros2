@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>cuopt_routing_server_client</name>
+  <version>0.0.0</version>
+  <description>ROS2 Action Server that calls a standalone cuopt-server (REST) to solve VRP problems, instead of linking cuOpt directly</description>
+  <maintainer email="zmtech@todo.todo">zmtech</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>rosidl_default_generators</depend>
+  <depend>action_msgs</depend>
+  <!-- rosdep keys are not guaranteed to resolve these on every distro;
+       the README's apt command is the authoritative install step. -->
+  <depend>libcurl4-openssl-dev</depend>
+  <depend>nlohmann-json3-dev</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

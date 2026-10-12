@@ -1,0 +1,34 @@
+# Goal — capacitated VRP with time windows, single capacity dimension.
+# Mirrors the REST payload used by the cuopt-server /cuopt/request endpoint
+# (cost_matrix_data / task_data / fleet_data / solver_config).
+
+int32 num_locations                       # total locations incl. depot (index 0)
+float64[] cost_matrix                     # flattened row-major, num_locations x num_locations
+float64[] travel_time_matrix              # same shape; leave empty to reuse cost_matrix
+
+int32[] task_locations                    # location index per task (depot excluded)
+int32[] demand                            # demand per task, single capacity dimension
+float64[] task_time_windows_earliest
+float64[] task_time_windows_latest
+float64[] service_times
+
+int32[] vehicle_start_locations
+int32[] vehicle_end_locations
+int32[] vehicle_capacities                # single capacity dimension, one entry per vehicle
+float64[] vehicle_time_windows_earliest
+float64[] vehicle_time_windows_latest
+
+float64 solver_time_limit
+string server_url                         # optional override; empty = use node's server_url param
+---
+# Result
+bool success                              # true only if solver_response.status == 0 (SUCCESS)
+string raw_status                         # solver_response.status as a string (server sends it as
+                                           # a number: 0=SUCCESS, 1=FAIL, 2=TIMEOUT, 3=EMPTY)
+float64 solution_cost
+int32[] route_vehicle_ids                 # parallel to route_locations: owning vehicle id per stop
+int32[] route_locations                   # flattened route stops, grouped by vehicle, in order
+string error_message
+---
+# Feedback
+string status

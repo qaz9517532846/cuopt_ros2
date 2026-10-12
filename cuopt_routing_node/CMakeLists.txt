@@ -29,19 +29,34 @@ find_path(CUOPT_INCLUDE_DIR
 find_library(CUOPT_LIBRARY cuopt
   HINTS ${CUOPT_SDK_PREFIX}/lib REQUIRED)
 
-add_executable(cuopt_routing_demo src/cuopt_routing_demo.cu)
-target_include_directories(cuopt_routing_demo PRIVATE ${CUOPT_INCLUDE_DIR})
-target_link_libraries(cuopt_routing_demo
-  ${CUOPT_LIBRARY}
-  rmm::rmm
-  raft::raft
-)
-ament_target_dependencies(cuopt_routing_demo rclcpp)
-
-set_target_properties(cuopt_routing_demo PROPERTIES
-  BUILD_RPATH   "${CUOPT_SDK_PREFIX}/lib"
-  INSTALL_RPATH "${CUOPT_SDK_PREFIX}/lib"
+# Three demos, one per official cuOpt C++ routing example
+# (cpp/tests/examples/routing/): CVRPTW, mixed-fleet PDPTW, and service-team
+# routing with breaks. All share the same include/link setup.
+set(ROUTING_DEMO_TARGETS
+  cuopt_routing_demo
+  pdptw_mixed_fleet_demo
+  service_team_routing_demo
 )
 
-install(TARGETS cuopt_routing_demo DESTINATION lib/${PROJECT_NAME})
+foreach(target ${ROUTING_DEMO_TARGETS})
+  add_executable(${target} src/${target}.cu)
+  target_include_directories(${target} PRIVATE
+    ${CUOPT_INCLUDE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include   # vendored include/cuopt_routing_node/copy_helpers.hpp
+  )
+  target_link_libraries(${target}
+    ${CUOPT_LIBRARY}
+    rmm::rmm
+    raft::raft
+  )
+  ament_target_dependencies(${target} rclcpp)
+
+  set_target_properties(${target} PROPERTIES
+    BUILD_RPATH   "${CUOPT_SDK_PREFIX}/lib"
+    INSTALL_RPATH "${CUOPT_SDK_PREFIX}/lib"
+  )
+
+  install(TARGETS ${target} DESTINATION lib/${PROJECT_NAME})
+endforeach()
+
 ament_package()
