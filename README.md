@@ -363,4 +363,6 @@ Read the two result arrays pairwise (`route_vehicle_ids[i]` owns stop `route_loc
 
 ---
 
-*License/copyright placeholder — fill in your project's actual license and copyright holder here. Note that cuOpt itself is licensed under Apache-2.0; any redistribution of cuOpt headers or binaries must comply with that license.*
+*This repository is for your reference only. copying, patent application, academic journals are strictly prohibited.
+
+Copyright © 2026 ZM Robotics Software Laboratory.*
